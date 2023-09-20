@@ -1,0 +1,154 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+
+    "Parameters": {
+        "PublicAZ": {
+            "Description": "PublicAZ",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+          },
+
+        "PrivateAZ": {
+            "Description": "PrivateAZ",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+           }
+       },
+
+    "Resources": {
+        "MyVPCone": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "192.168.0.0/22"
+                }
+            },
+
+        "PublicsubnetName": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": {
+                    "Ref": "PublicAZ"
+                   },
+                "VpcId": {
+                    "Ref": "MyVPCone"
+                    },
+                "CidrBlock": "192.168.1.0/24"
+                 }
+              },
+
+        "PrivatesubnetName": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": {
+                    "Ref": "PrivateAZ"
+                      },
+                "VpcId": {
+                    "Ref": "MyVPCone"
+                      },
+                "CidrBlock": "192.168.2.0/24"
+                }
+            },
+
+        "publicrouteTable": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "MyVPCone"
+                    }
+                }
+           },
+
+        "PrivateRouteTable": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "MyVPCone"
+                    }
+                }
+           },
+
+        "routeTableAssocName": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "PublicsubnetName"
+                     },
+                "RouteTableId": {
+                    "Ref": "publicrouteTable"
+                      }
+                  }
+            },
+
+        "PrivateRouteTableAssocName": {
+                "Type": "AWS::EC2::SubnetRouteTableAssociation",
+                "Properties": {
+                    "SubnetId": {
+                        "Ref": "PrivatesubnetName"
+                         },
+                    "RouteTableId": {
+                        "Ref": "PrivateRouteTable"
+                          }
+                      }
+                },
+        "NATGateway": {
+            "Type": "AWS::EC2::NatGateway",
+            "Properties": {
+                "AllocationId": {
+                    "Fn::GetAtt": [
+                        "NATGatewayEIP",
+                        "AllocationId"
+                    ]
+                },
+
+                "SubnetId": {
+                    "Ref": "PublicsubnetName"
+                }
+                 }
+                },
+
+        "NATGatewayEIP": {
+            "Type": "AWS::EC2::EIP",
+            "Properties": {
+                "Domain": "MyVPCone"
+            }
+             },
+
+        "RouteNATGateway": {
+            "DependsOn": [
+                "NATGateway"
+            ],
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "PrivateRouteTable"
+                },
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "NatGatewayId": {
+                    "Ref": "NATGateway"
+                }
+            }
+          },
+
+        "igwName": {
+            "Type": "AWS::EC2::InternetGateway"
+            },
+        "AttachGateway": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "MyVPCone"
+                     },
+                "InternetGatewayId": {
+                    "Ref": "igwName"
+                     }
+                   }
+            }
+
+    },
+
+    "Outputs" : {
+        "myVPCID": {
+            "Value":
+            { "Ref": "MyVPCone" }
+            
+        }
+    }
+}
