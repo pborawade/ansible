@@ -1,0 +1,23 @@
+---
+- myStudents:
+  - name: Alok
+    phone: 88888888
+    Address: 
+     - doorno: 11
+     - streetno: 2
+     - pincode: 4112512
+
+  - name: Meenal
+    phone: 887777888
+    Address:
+     - doorno: 25
+     - streetno: 5
+     - pincode: 455124
+
+
+  - name: Seema
+    phone: 9898989841
+    Address: 
+     - doorno: 45
+     - streetno: 4
+     - pincode: 411251
