@@ -1,11 +1,11 @@
 --- 
 - hosts: 10.0.3.231
   become: yes
-  vars:
-    myvar1: git1
-    myvar2: wget
-    myvar3: tree
-  tasks: 
-  - name: i want to display myvar2
+  task: 
+  - name: i want to excute linux command
+    command: hostname -f
+    register: myvariable
+  
+  - name: i want to display first task result
     debug:
-      msg: "{{myvar2}}"
+      msg: "{{myvariable}}"
