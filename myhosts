@@ -1,7 +1,7 @@
 10.0.3.231
 10.0.14.24
  
-[mywebserver]
+[webserver]
 10.0.10.234
 
 [myubuntuserver]
@@ -10,7 +10,7 @@
 [myredhatserve]
 10.0.14.24
 
-[mywebservers:vars]
+[webserver:vars]
 mywebpackonubuntu= apache2
 mywebpackonredhat= httpd
  
