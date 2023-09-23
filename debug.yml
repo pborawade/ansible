@@ -1,7 +1,7 @@
 --- 
 - hosts: 10.0.3.231
   become: yes
-  task: 
+  tasks: 
   - name: i want to excute linux command
     command: hostname -f
     register: myvariable
