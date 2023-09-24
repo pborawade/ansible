@@ -3,3 +3,6 @@
   become: yes
   tasks:
   - name: File creation
+    file:
+     path: /home/ubuntu/testfile.yml
+     state: touch
