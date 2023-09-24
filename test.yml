@@ -1,0 +1,5 @@
+--- 
+- hosts: 10.0.3.231
+  become: yes
+  tasks:
+  - name: File creation
