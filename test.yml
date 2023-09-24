@@ -2,7 +2,10 @@
 - hosts: 10.0.3.231
   become: yes
   tasks:
+
   - name: File creation
     file:
      path: /home/ubuntu/testfile.yml
      state: touch
+
+     # we have added new file
