@@ -10,6 +10,11 @@
 
   - name: copy index.html file into nodes side
     copy:
-       src: index.html  
+       src: index.html
        dest: /var/www/html/index.html
+
+  - name: copy myindex.j2 file into nodes side
+    copy:
+       src: myindex.j2
+       dest: /var/www/html/index.html   
        
