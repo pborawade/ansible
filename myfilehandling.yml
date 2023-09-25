@@ -16,11 +16,19 @@
   - name: copy index.j2 file into nodes side
     ansible.builtin.template:
             src: index.j2
-            dest: /var/www/html/index.html     
+            dest: /var/www/html/index.html   
+    notify: restart webserver         
 
   - name: i want to download remote(internet) files
     ansible.builtin.get_url:
            url: https://get.jenkins.io/war-stable/2.414.2/jenkins.war
-           dest: /home/ubuntu/jenkins.war
+           dest: /home/ubuntu/jenkins.war 
            force_basic_auth: yes
-     
+
+
+  handlers:
+  - name: restart webserver
+    service:
+       name: apache2
+       state: restarted
+  #  remote file added  
