@@ -5,7 +5,7 @@
 
   - name: File creation
     file:
-     path: /home/ubuntu/testfile.yml
+     path: /home/ubuntu/testfile
      state: touch
 
      # we have added new file
