@@ -8,7 +8,7 @@
        name: apache2
        state: present
 
-  - name: copy index.html file into nodes side
+  - name: copy index.html file into nodes  side
     copy:
        src: myindex.html
        dest: /var/www/html/index.html
