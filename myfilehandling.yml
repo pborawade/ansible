@@ -1,8 +1,0 @@
---- 
-- hosts: 10.0.3.231
-  become: yes
-  tasks:
-  - name: create file
-    file:
-       path: /home/ubuntu/testfile.yml
-       state: touch
